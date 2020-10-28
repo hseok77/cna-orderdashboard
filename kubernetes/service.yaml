@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: orderDashboard
+  name: orderdashboard
   labels:
-    app: orderDashboard
+    app: orderdashboard
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: orderDashboard
+    app: orderdashboard
