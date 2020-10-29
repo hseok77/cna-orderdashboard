@@ -3,6 +3,7 @@ burgerqueen\OrderDashboardRepository.class
 burgerqueen\AbstractEvent.class
 burgerqueen\OrderDashboardViewHandler.class
 burgerqueen\OrderDashboard.class
+burgerqueen\Delivered.class
 burgerqueen\PolicyHandler.class
 burgerqueen\config\kafka\KafkaProcessor.class
 burgerqueen\AbstractEvent$1.class
