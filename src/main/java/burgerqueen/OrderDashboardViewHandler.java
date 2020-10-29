@@ -20,10 +20,11 @@ public class OrderDashboardViewHandler {
 
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPaid_StartDelivery(@Payload Paid paid){
+        System.out.println("##### Paid ddddddddd : " + paid.toJson() );
         if(paid.isMe()){
 
 
-            System.out.println("##### StartDelivery : " + paid.getOrderId() + ", " + orderDashboardRepository.count());
+            System.out.println("##### Paid : " + paid.getOrderId() + ", " + orderDashboardRepository.count());
 
 //            List<OrderDashboard> orderList = orderDashboardRepository.findAll();
 //
@@ -50,7 +51,8 @@ public class OrderDashboardViewHandler {
     }
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverPaid_StartDelivery(@Payload Ordered ordered){
+    public void wheneverOrder_StartOrder(@Payload Ordered ordered){
+        System.out.println("##### order 342 : " + ordered.toJson() );
         if(ordered.isMe()){
 
             System.out.println("##### Add Order : " + ordered.getId() );
@@ -65,6 +67,28 @@ public class OrderDashboardViewHandler {
 
 
             orderDashboardRepository.save(orderDashboard);
+
+
+        }
+
+    }
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverDelivered_StartDelivery(@Payload Delivered delivered){
+        System.out.println("##### Delivered Sub1 : " + delivered.toJson() );
+        if(delivered.isMe()){
+
+
+            System.out.println("##### Delivered Sub2 : " + delivered.getOrderId() + ", " + orderDashboardRepository.count());
+
+            List<OrderDashboard> orderList = orderDashboardRepository.findByOrderId(delivered.getOrderId());
+            System.out.println("##### Delivered Sub3 : " + orderList.size());
+            for(OrderDashboard dashboard : orderList){
+                System.out.println("##### Delivered Sub4 : " + delivered.toJson());
+                dashboard.setState(delivered.getState());
+
+                orderDashboardRepository.save(dashboard);
+            }
 
 
         }
